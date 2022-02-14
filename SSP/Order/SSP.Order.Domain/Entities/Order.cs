@@ -1,9 +1,10 @@
-﻿using System;
+﻿using SSP.Order.Domain.Entities.Base;
+using System;
 using System.Collections.Generic;
 
 namespace SSP.Order.Domain.Entities
 {
-    public class Order
+    public class Order : Entity
     {
         public string OrderNumber { get; set; }
         public string OrderCustomerId { get; set; }
