@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SSP.Order.Application\SSP.Order.Application.csproj" />
     <ProjectReference Include="..\SSP.Order.Infrastructure\SSP.Order.Infrastructure.csproj" />
   </ItemGroup>
 

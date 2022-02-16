@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using SSP.Order.Application;
 using SSP.Order.Infrastructure;
 
 namespace SSP.Order.API
@@ -20,10 +21,15 @@ namespace SSP.Order.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+
             //Add infrastructure layer
             services.AddInfrastructure(Configuration);
+
+            //Add application layer
+            services.AddApplication();
+
+            //Add swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SSP.Order.API", Version = "v1" });
