@@ -14,10 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Handlers\" />
-    <Folder Include="Mapper\" />
     <Folder Include="PipelineBehaviors\" />
     <Folder Include="Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SSP.Order.Domain\SSP.Order.Domain.csproj" />
   </ItemGroup>
 
 </Project>
