@@ -1,6 +1,7 @@
 ﻿using SSP.Order.Domain.Repositories;
 using SSP.Order.Infrastructure.Data;
 using SSP.Order.Infrastructure.Repositories.Base;
+using System.Threading.Tasks;
 
 namespace SSP.Order.Infrastructure.Repositories
 {
@@ -11,6 +12,11 @@ namespace SSP.Order.Infrastructure.Repositories
             : base(dbContext)
         {
             
+        }
+
+        public Task<Domain.Entities.Order> GetOrderByOrderNumber()
+        {
+            throw new System.NotImplementedException();
         }
         #endregion
     }
