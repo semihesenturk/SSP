@@ -14,7 +14,7 @@ namespace SSP.Order.Infrastructure.Repositories
             
         }
 
-        public Task<Domain.Entities.Order> GetOrderByOrderNumber()
+        public Task<Domain.Entities.Order> GetOrderByOrderNumber(string orderNumber)
         {
             throw new System.NotImplementedException();
         }
