@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SSP.Order.Domain.Repositories;
 using SSP.Order.Infrastructure.Data;
+using SSP.Order.Infrastructure.Repositories;
 
 namespace SSP.Order.Infrastructure
 {
@@ -14,6 +16,7 @@ namespace SSP.Order.Infrastructure
                 ServiceLifetime.Singleton);
 
             //Add Repositories
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             return services;
         }
