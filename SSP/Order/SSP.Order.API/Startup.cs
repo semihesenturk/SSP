@@ -1,11 +1,14 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using SSP.Order.API.Mapper;
 using SSP.Order.Application;
 using SSP.Order.Infrastructure;
+using System.Reflection;
 
 namespace SSP.Order.API
 {
@@ -34,6 +37,15 @@ namespace SSP.Order.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SSP.Order.API", Version = "v1" });
             });
+
+            #region Configure Mapper
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.ShouldMapProperty = p => p.GetMethod.IsPublic || p.GetMethod.IsAssembly;
+                cfg.AddProfile<OrderMappingProfile>();
+            });
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

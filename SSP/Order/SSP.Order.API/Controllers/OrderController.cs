@@ -1,9 +1,11 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SSP.Order.API.Models.RequestModels;
+using SSP.Order.API.Models.ResponseModels;
 using SSP.Order.Application.Commands.OrderCreate;
 using SSP.Order.Application.Queries;
-using SSP.Order.Application.Responses;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -16,43 +18,76 @@ namespace SSP.Order.API.Controllers
         #region Variables
         private readonly IMediator _mediator;
         private readonly ILogger<OrderController> _logger;
+        private readonly IMapper _mapper;
         #endregion
 
         #region Constructor
-        public OrderController(IMediator mediator, ILogger<OrderController> logger)
+        public OrderController(IMediator mediator, ILogger<OrderController> logger, IMapper mapper)
         {
             _mediator = mediator;
             _logger = logger;
+            _mapper = mapper;
         }
         #endregion
 
         #region Crud Operations
         [HttpGet("GetOrderByOrderNumber/{orderNumber}")]
-        [ProducesResponseType(typeof(OrderResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiCommonResponseModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<OrderResponse>> GetOrderByOrderNumber(string orderNumber)
+        public async Task<ActionResult<ApiCommonResponseModel>> GetOrderByOrderNumber(string orderNumber)
         {
+            ApiCommonResponseModel response = new ApiCommonResponseModel();
+
             var query = new GetOrderByOrderNumberQuery(orderNumber);
 
             var order = await _mediator.Send(query);
-
             if (order == null)
-                return NotFound("Order couldn't found");
+            {
+                response.Data = null;
+                response.StatusCode = 500;
+                response.ErrorMessage = "Order couldn't found on db!";
 
-            return Ok(order);
+                _logger.LogError($"Order couldn't found on db with ordernumber: {orderNumber}");
+                return NotFound(response);
+            }
+            else
+            {
+                response.Data = order;
+                response.StatusCode = 200;
+                response.ErrorMessage = null;
+
+                _logger.LogInformation($"Order get operation success with ordernumber: {orderNumber}");
+                return Ok(response);
+            }
         }
 
         [HttpPost()]
-        [ProducesResponseType(typeof(OrderResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiCommonResponseModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<OrderResponse>> OrderCreate([FromBody] OrderCreateCommand command)
+        public async Task<ActionResult<ApiCommonResponseModel>> OrderCreate([FromBody] OrderCreateRequestModel requestModel)
         {
+            ApiCommonResponseModel response = new ApiCommonResponseModel();
+            OrderCreateCommand orderCreateCommand = _mapper.Map<OrderCreateCommand>(requestModel);
 
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(orderCreateCommand);
             if (result == null)
-                return BadRequest("Order can not create!");
+            {
+                response.StatusCode = 500;
+                response.ErrorMessage = "Order can not created!";
+                response.Data = null;
 
-            return Ok(result);
+                _logger.LogError("Order create operation finished with a error!");
+                return response;
+            }
+            else
+            {
+                response.StatusCode = 200;
+                response.ErrorMessage = null;
+                response.Data = result;
+
+                _logger.LogInformation($"Order created with ordernumber {result.OrderNumber}");
+                return response;
+            }
         }
         #endregion
     }

@@ -1,6 +1,9 @@
-﻿using SSP.Order.Domain.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using SSP.Order.Domain.Repositories;
 using SSP.Order.Infrastructure.Data;
 using SSP.Order.Infrastructure.Repositories.Base;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SSP.Order.Infrastructure.Repositories
@@ -11,12 +14,16 @@ namespace SSP.Order.Infrastructure.Repositories
         public OrderRepository(OrderContext dbContext)
             : base(dbContext)
         {
-            
+
         }
 
-        public Task<Domain.Entities.Order> GetOrderByOrderNumber(string orderNumber)
+        public async Task<Domain.Entities.Order> GetOrderByOrderNumber(string orderNumber)
         {
-            throw new System.NotImplementedException();
+            var order = await _dbContext.Orders.Where(o => o.OrderNumber == orderNumber).FirstOrDefaultAsync();
+            if (order == null)
+                return null;
+
+            return order;
         }
         #endregion
     }
