@@ -2,8 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SSP.Order.Domain.Repositories;
+using SSP.Order.Domain.Repositories.Base;
 using SSP.Order.Infrastructure.Data;
 using SSP.Order.Infrastructure.Repositories;
+using SSP.Order.Infrastructure.Repositories.Base;
 
 namespace SSP.Order.Infrastructure
 {
@@ -16,7 +18,8 @@ namespace SSP.Order.Infrastructure
                 ServiceLifetime.Singleton);
 
             //Add Repositories
-            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<IOrderRepository, OrderRepository>();
 
             return services;
         }
