@@ -48,7 +48,7 @@ namespace SSP.Order.API.Controllers
                 response.ErrorMessage = "Order couldn't found on db!";
 
                 _logger.LogError($"Order couldn't found on db with ordernumber: {orderNumber}");
-                return NotFound(response);
+                return response;
             }
             else
             {
@@ -57,7 +57,7 @@ namespace SSP.Order.API.Controllers
                 response.ErrorMessage = null;
 
                 _logger.LogInformation($"Order get operation success with ordernumber: {orderNumber}");
-                return Ok(response);
+                return response;
             }
         }
 

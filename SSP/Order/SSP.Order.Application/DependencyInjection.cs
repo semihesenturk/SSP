@@ -3,6 +3,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using SSP.Order.Application.Mapper;
+using SSP.Order.Application.PipelineBehaviors;
 using System.Reflection;
 
 namespace SSP.Order.Application
@@ -15,6 +16,12 @@ namespace SSP.Order.Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            #region Pipeline Behaviours
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnHandledExceptionBehaviour<,>));
+            #endregion
 
             #region Configure Mapper
             var config = new MapperConfiguration(cfg =>

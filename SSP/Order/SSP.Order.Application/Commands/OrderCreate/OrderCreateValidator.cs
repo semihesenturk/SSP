@@ -9,7 +9,7 @@ namespace SSP.Order.Application.Commands.OrderCreate
         {
             RuleFor(v => v.OrderNumber)
                 .NotEmpty()
-                .Length(0);
+                .MinimumLength(3);
         }
         #endregion
     }
