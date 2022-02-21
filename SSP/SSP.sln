@@ -11,15 +11,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notifier", "Notifier", "{1B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{1E0ED5A8-F08C-47C0-A422-24DBABAB12CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSP.Order.API", "Order\SSP.Order.API\SSP.Order.API.csproj", "{3154A5D1-E679-4C6C-8FAC-303B8C9CFCF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSP.Order.API", "Order\SSP.Order.API\SSP.Order.API.csproj", "{3154A5D1-E679-4C6C-8FAC-303B8C9CFCF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSP.Order.Domain", "Order\SSP.Order.Domain\SSP.Order.Domain.csproj", "{C6BDB168-26E1-4893-9205-20F6B59915EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSP.Order.Domain", "Order\SSP.Order.Domain\SSP.Order.Domain.csproj", "{C6BDB168-26E1-4893-9205-20F6B59915EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSP.Order.Application", "Order\SSP.Order.Application\SSP.Order.Application.csproj", "{5A658BA1-4BA0-4DD3-B170-A32F1A660DDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSP.Order.Application", "Order\SSP.Order.Application\SSP.Order.Application.csproj", "{5A658BA1-4BA0-4DD3-B170-A32F1A660DDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSP.Order.Infrastructure", "Order\SSP.Order.Infrastructure\SSP.Order.Infrastructure.csproj", "{B39ADFB3-3519-46DE-A48E-162BE210F983}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSP.Order.Infrastructure", "Order\SSP.Order.Infrastructure\SSP.Order.Infrastructure.csproj", "{B39ADFB3-3519-46DE-A48E-162BE210F983}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSP.Order.Shared", "Order\SSP.Order.Shared\SSP.Order.Shared.csproj", "{5F7FF326-8420-4982-977A-4FC38EA1563B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSP.Order.Shared", "Order\SSP.Order.Shared\SSP.Order.Shared.csproj", "{5F7FF326-8420-4982-977A-4FC38EA1563B}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{36FA8E41-F98C-43B1-B8D1-05DAE845EFA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{5F7FF326-8420-4982-977A-4FC38EA1563B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F7FF326-8420-4982-977A-4FC38EA1563B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F7FF326-8420-4982-977A-4FC38EA1563B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36FA8E41-F98C-43B1-B8D1-05DAE845EFA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36FA8E41-F98C-43B1-B8D1-05DAE845EFA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36FA8E41-F98C-43B1-B8D1-05DAE845EFA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36FA8E41-F98C-43B1-B8D1-05DAE845EFA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

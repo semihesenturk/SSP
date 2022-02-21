@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  ssp.order.api:
+    image: ${DOCKER_REGISTRY-}ssporderapi
+    build:
+      context: .
+      dockerfile: Order/SSP.Order.API/Dockerfile
+
+  ordersqldb:
+    image: mcr.microsoft.com/mssql/server:2019-latest
