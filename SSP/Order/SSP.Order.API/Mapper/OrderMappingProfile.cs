@@ -9,6 +9,7 @@ namespace SSP.Order.API.Mapper
         public OrderMappingProfile()
         {
             CreateMap<OrderCreateRequestModel, OrderCreateCommand>().ReverseMap();
+            CreateMap<OrderItemCreateRequestModel, Domain.Entities.OrderItem>().ReverseMap();
         }
     }
 }

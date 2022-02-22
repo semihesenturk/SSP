@@ -1,10 +1,7 @@
-﻿using SSP.Order.Domain.Entities.Base;
-
-namespace SSP.Order.Domain.Entities
+﻿namespace SSP.Order.API.Models.RequestModels
 {
-    public class OrderItem : Entity
+    public class OrderItemCreateRequestModel
     {
-        public int OrderId { get; set; }
         public string ProductCode { get; set; }
         public decimal ProductPrice { get; set; }
         public int Quantity { get; set; }

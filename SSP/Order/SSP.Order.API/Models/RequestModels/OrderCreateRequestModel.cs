@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace SSP.Order.API.Models.RequestModels
 {
     public class OrderCreateRequestModel
@@ -9,6 +11,6 @@ namespace SSP.Order.API.Models.RequestModels
         public decimal OrderAmount { get; set; }
         public string Description { get; set; }
         public DateTime OrderDate { get; set; }
-        //public List<OrderItem> OrderItems { get; set; }
+        public List<OrderItemCreateRequestModel> OrderItems { get; set; }
     }
 }

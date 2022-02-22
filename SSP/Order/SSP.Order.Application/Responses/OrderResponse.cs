@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SSP.Order.Application.Responses
 {
@@ -10,6 +11,6 @@ namespace SSP.Order.Application.Responses
         public decimal OrderAmount { get; set; }
         public string Description { get; set; }
         public DateTime OrderDate { get; set; }
-        //public List<OrderItem> OrderItems { get; set; }
+        public List<OrderItemResponse> OrderItems { get; set; }
     }
 }

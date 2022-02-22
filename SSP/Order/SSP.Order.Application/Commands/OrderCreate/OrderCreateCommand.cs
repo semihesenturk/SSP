@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using SSP.Order.Application.Responses;
 using System;
+using System.Collections.Generic;
 
 namespace SSP.Order.Application.Commands.OrderCreate
 {
@@ -12,6 +13,6 @@ namespace SSP.Order.Application.Commands.OrderCreate
         public decimal OrderAmount { get; set; }
         public string Description { get; set; }
         public DateTime OrderDate { get; set; }
-        //public List<OrderItem> OrderItems { get; set; }
+        public List<Domain.Entities.OrderItem> OrderItems { get; set; }
     }
 }

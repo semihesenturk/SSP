@@ -11,6 +11,7 @@ namespace SSP.Order.Application.Mapper
         {
             CreateMap<Domain.Entities.Order, OrderCreateCommand>().ReverseMap();
             CreateMap<Domain.Entities.Order, OrderResponse>().ReverseMap();
+            CreateMap<Domain.Entities.OrderItem, OrderItemResponse>().ReverseMap();
         }
         #endregion
     }
