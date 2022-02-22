@@ -14,16 +14,16 @@ namespace SSP.Order.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             #region InMemoryDb
-            services.AddDbContext<OrderContext>(opt => opt.UseInMemoryDatabase(databaseName: "InMemoryDb"),
-                ServiceLifetime.Singleton,
-                ServiceLifetime.Singleton);
+            //services.AddDbContext<OrderContext>(opt => opt.UseInMemoryDatabase(databaseName: "InMemoryDb"),
+            //    ServiceLifetime.Singleton,
+            //    ServiceLifetime.Singleton);
             #endregion
 
             #region MsSqlServer
-            //services.AddDbContext<OrderContext>(options =>
-            //   options.UseSqlServer(
-            //       configuration.GetConnectionString("OrderConnection"),
-            //       b => b.MigrationsAssembly(typeof(OrderContext).Assembly.FullName)), ServiceLifetime.Singleton); 
+            services.AddDbContext<OrderContext>(options =>
+               options.UseSqlServer(
+                   configuration.GetConnectionString("OrderConnection"),
+                   b => b.MigrationsAssembly(typeof(OrderContext).Assembly.FullName)), ServiceLifetime.Singleton);
             #endregion
 
             #region Repositories
