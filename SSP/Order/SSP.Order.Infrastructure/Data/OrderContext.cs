@@ -20,10 +20,6 @@ namespace SSP.Order.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<OrderItem>()
-                 .HasOne<Domain.Entities.Order>()
-                 .WithMany()
-                 .HasForeignKey(p => p.OrderId);
         }
     }
 }

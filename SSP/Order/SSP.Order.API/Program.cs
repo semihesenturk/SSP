@@ -17,7 +17,7 @@ namespace SSP.Order.API
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseUrls("http://localhost:5000");
+                    //webBuilder.UseUrls("http://localhost:80");
                     webBuilder.UseStartup<Startup>();
                 });
     }

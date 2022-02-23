@@ -1,25 +1,24 @@
 version: '3.4'
 
 services:
-  ssp.order.api:
-    container_name: "SSPOrderApi"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:OrderConnection=Server=ordersqldb;Database=OrderDb;User Id=sa;Password=Odb12345678"
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-    depends_on:
-      - ordersqldb
-    ports:
-      - "8002:80"
-      - "443"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-
   ordersqldb:
     container_name: ordersqldb
     ports:
-      - "1433:1433"
+        - "1433:1433"
     environment:
-      SA_PASSWORD: "Odb12345678"
-      ACCEPT_EULA: "Y"
+        SA_PASSWORD: "Odb12345678"
+        ACCEPT_EULA: "Y"
+
+  ssp.order.api:
+    container_name: SSPOrderApi
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - "ConnectionStrings:OrderConnection=Server=ordersqldb;Database=OrderDb;User Id=SA;Password=Odb12345678;TrustServerCertificate=true"
+        - ASPNETCORE_URLS=https://+:443;http://+:80
+    depends_on:
+        - ordersqldb
+    ports:
+        - "8002:80"
+    volumes:
+        - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+        - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

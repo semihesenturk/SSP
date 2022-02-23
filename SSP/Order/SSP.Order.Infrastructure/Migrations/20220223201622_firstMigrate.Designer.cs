@@ -10,8 +10,8 @@ using SSP.Order.Infrastructure.Data;
 namespace SSP.Order.Infrastructure.Migrations
 {
     [DbContext(typeof(OrderContext))]
-    [Migration("20220222060057_initial")]
-    partial class initial
+    [Migration("20220223201622_firstMigrate")]
+    partial class firstMigrate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -88,9 +88,6 @@ namespace SSP.Order.Infrastructure.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OrderId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("ProductCode")
                         .HasColumnType("nvarchar(max)");
 
@@ -110,22 +107,18 @@ namespace SSP.Order.Infrastructure.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("OrderId1");
-
                     b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("SSP.Order.Domain.Entities.OrderItem", b =>
                 {
-                    b.HasOne("SSP.Order.Domain.Entities.Order", null)
-                        .WithMany()
+                    b.HasOne("SSP.Order.Domain.Entities.Order", "Order")
+                        .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SSP.Order.Domain.Entities.Order", null)
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId1");
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("SSP.Order.Domain.Entities.Order", b =>

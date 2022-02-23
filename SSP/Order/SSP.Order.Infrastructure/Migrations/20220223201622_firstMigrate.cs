@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SSP.Order.Infrastructure.Migrations
 {
-    public partial class initial : Migration
+    public partial class firstMigrate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,7 +41,6 @@ namespace SSP.Order.Infrastructure.Migrations
                     ProductPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OrderId1 = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedUserId = table.Column<int>(type: "int", nullable: false),
                     UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -57,23 +56,12 @@ namespace SSP.Order.Infrastructure.Migrations
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderItems_Orders_OrderId1",
-                        column: x => x.OrderId1,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",
                 table: "OrderItems",
                 column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_OrderId1",
-                table: "OrderItems",
-                column: "OrderId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
