@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SSP.Order.SL.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace SSP.Order.SL.API.Controllers
             return response;
         }
 
-        [HttpGet("/{orderId}")]
+        [HttpGet("{orderId}")]
         [ProducesResponseType(typeof(ApiCommonResponseModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<ApiCommonResponseModel>> GetOrderById(int orderId)
