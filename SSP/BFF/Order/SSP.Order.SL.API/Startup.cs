@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -25,12 +26,25 @@ namespace SSP.Order.SL.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            #region Masstransit
+            services.AddMassTransit(x =>
+            {
+
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(Configuration.GetConnectionString("RabbitMQ"));
+                });
+            });
+            services.AddMassTransitHostedService();
+            #endregion
 
             services.AddControllers();
+            #region Swagger
             services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SSP.Order.SL.API", Version = "v1" });
-            });
+               {
+                   c.SwaggerDoc("v1", new OpenApiInfo { Title = "SSP.Order.SL.API", Version = "v1" });
+               });
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
