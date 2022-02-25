@@ -1,4 +1,5 @@
 ﻿using SSP.Order.Domain.Entities.Base;
+using SSP.Order.Shared.Enums;
 using System;
 using System.Collections.Generic;
 
@@ -12,6 +13,7 @@ namespace SSP.Order.Domain.Entities
         public decimal OrderAmount { get; set; }
         public string Description { get; set; }
         public DateTime OrderDate { get; set; }
+        public OrderStatusEnum Status { get; set; }
         public ICollection<OrderItem> OrderItems { get; set; }
 
         public Order()

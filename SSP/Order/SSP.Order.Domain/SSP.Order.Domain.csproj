@@ -4,4 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SSP.Order.Shared\SSP.Order.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
