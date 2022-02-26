@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SSP.Order.SL.API.Models.RequestModels
+namespace SSP.Order.Shared.Messages
 {
-    public class OrderCreateRequestModel
+    public class OrderCreateMessage
     {
         public string OrderNumber { get; set; }
         public string OrderCustomerId { get; set; }
@@ -11,9 +11,9 @@ namespace SSP.Order.SL.API.Models.RequestModels
         public decimal OrderAmount { get; set; }
         public string Description { get; set; }
         public DateTime OrderDate { get; set; }
-        public List<OrderItemCreateRequestModel> OrderItems { get; set; }
+        public List<OrderItemCreateMessage> OrderItems { get; set; } = new List<OrderItemCreateMessage>();
     }
-    public class OrderItemCreateRequestModel
+    public class OrderItemCreateMessage
     {
         public string ProductCode { get; set; }
         public decimal ProductPrice { get; set; }

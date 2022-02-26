@@ -1,16 +1,13 @@
+using AutoMapper;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using SSP.Order.SL.API.Mapper;
+using System.Reflection;
 
 namespace SSP.Order.SL.API
 {
@@ -44,6 +41,15 @@ namespace SSP.Order.SL.API
                {
                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "SSP.Order.SL.API", Version = "v1" });
                });
+            #endregion
+
+            #region Configure Mapper
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.ShouldMapProperty = p => p.GetMethod.IsPublic || p.GetMethod.IsAssembly;
+                cfg.AddProfile<OrderMappingProfile>();
+            });
             #endregion
         }
 
