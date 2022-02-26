@@ -1,12 +1,15 @@
 using AutoMapper;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using SSP.Order.API.Consumers;
 using SSP.Order.API.Mapper;
 using SSP.Order.Application;
 using SSP.Order.Infrastructure;
+using SSP.Order.Shared.Settings;
 using System.Reflection;
 
 namespace SSP.Order.API
@@ -26,6 +29,21 @@ namespace SSP.Order.API
             services.AddControllers();
 
             services.AddSingleton(sp => Configuration);
+
+            //Add Masstransit
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumer<OrderCreateMessageConsumer>();
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(Configuration.GetConnectionString("RabbitMQ"));
+                    cfg.ReceiveEndpoint(RabbitMQSettingsConst.OrderCreateMessageQueueName, e =>
+                    {
+                        e.ConfigureConsumer<OrderCreateMessageConsumer>(context);
+                    });
+                });
+            });
+            services.AddMassTransitHostedService();
 
             //Add infrastructure layer
             services.AddInfrastructure(Configuration);

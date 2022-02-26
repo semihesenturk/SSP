@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MassTransit" Version="7.3.1" />
+    <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
+    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.3.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="7.3.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.14">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -20,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SSP.Order.Application\SSP.Order.Application.csproj" />
     <ProjectReference Include="..\SSP.Order.Infrastructure\SSP.Order.Infrastructure.csproj" />
+    <ProjectReference Include="..\SSP.Order.Shared\SSP.Order.Shared.csproj" />
   </ItemGroup>
 
 </Project>
