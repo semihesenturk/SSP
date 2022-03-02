@@ -1,4 +1,5 @@
 ﻿using SSP.Order.Domain.Entities.Base;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SSP.Order.Domain.Entities

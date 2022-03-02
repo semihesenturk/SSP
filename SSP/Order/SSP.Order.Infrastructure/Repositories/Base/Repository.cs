@@ -60,7 +60,6 @@ namespace SSP.Order.Infrastructure.Repositories.Base
         public async Task<T> AddASync(T entity)
         {
             _dbContext.Set<T>().Add(entity);
-            entity.CreatedDate = DateTime.Now;
             entity.CreatedUserId = 1;
             await _dbContext.SaveChangesAsync();
 

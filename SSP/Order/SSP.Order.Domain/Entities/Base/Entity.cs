@@ -17,5 +17,11 @@ namespace SSP.Order.Domain.Entities.Base
         {
             return (Entity)this.MemberwiseClone();
         }
+
+        public Entity()
+        {
+            CreatedDate = DateTime.Now;
+            IsActive = true;
+        }
     }
 }
