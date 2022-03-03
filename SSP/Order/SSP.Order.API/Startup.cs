@@ -81,6 +81,7 @@ namespace SSP.Order.API
 
             //Add middlewares
             app.UseMiddleware<ExceptionHandlerMiddleWare>();
+            app.UseMiddleware<RequestResponseMiddleWare>();
 
             app.UseRouting();
 
