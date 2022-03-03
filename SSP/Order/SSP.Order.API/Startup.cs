@@ -31,6 +31,8 @@ namespace SSP.Order.API
 
             services.AddSingleton(sp => Configuration);
 
+            services.AddLogging();
+
             //Add Masstransit
             services.AddMassTransit(x =>
             {
