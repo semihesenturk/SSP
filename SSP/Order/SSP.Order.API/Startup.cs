@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using SSP.Order.API.Consumers;
 using SSP.Order.API.Mapper;
+using SSP.Order.API.Middlewares;
 using SSP.Order.Application;
 using SSP.Order.Infrastructure;
 using SSP.Order.Shared.Settings;
@@ -57,14 +58,13 @@ namespace SSP.Order.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SSP.Order.API", Version = "v1" });
             });
 
-            #region Configure Mapper
+            //Configure Mapper
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.ShouldMapProperty = p => p.GetMethod.IsPublic || p.GetMethod.IsAssembly;
                 cfg.AddProfile<OrderMappingProfile>();
             });
-            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,6 +76,9 @@ namespace SSP.Order.API
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SSP.Order.API v1"));
 
             //app.UseHttpsRedirection();
+
+            //Add middlewares
+            app.UseMiddleware<ExceptionHandlerMiddleWare>();
 
             app.UseRouting();
 
