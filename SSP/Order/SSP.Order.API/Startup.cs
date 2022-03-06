@@ -65,6 +65,8 @@ namespace SSP.Order.API
 
             app.UseCustomHealthCheck();
 
+            app.UseResponseCaching();
+
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SSP.Order.API v1"));
 

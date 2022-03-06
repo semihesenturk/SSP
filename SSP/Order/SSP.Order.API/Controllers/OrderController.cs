@@ -34,6 +34,7 @@ namespace SSP.Order.API.Controllers
         [HttpGet("GetOrderByOrderNumber/{orderNumber}")]
         [ProducesResponseType(typeof(ApiCommonResponseModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ResponseCache(Duration = 10)]
         public async Task<ActionResult<ApiCommonResponseModel>> GetOrderByOrderNumber(string orderNumber)
         {
             ApiCommonResponseModel response = new ApiCommonResponseModel();
