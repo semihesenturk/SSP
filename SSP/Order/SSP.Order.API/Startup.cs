@@ -11,6 +11,7 @@ using SSP.Order.API.Models.RequestModels;
 using SSP.Order.API.Validations;
 using SSP.Order.Application;
 using SSP.Order.Infrastructure;
+using System;
 
 namespace SSP.Order.API
 {
@@ -53,6 +54,13 @@ namespace SSP.Order.API
 
             //Add FluentValidation
             services.AddTransient<IValidator<OrderCreateRequestModel>, OrderValidator>();
+
+            //Add HttpClient
+            services.AddHttpClient("test", config =>
+             {
+                 config.BaseAddress = new Uri("https://www.garanti.com.tr");
+                 config.DefaultRequestHeaders.Add("Authorization", "Bearer 12312313");
+             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
