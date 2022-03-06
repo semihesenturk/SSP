@@ -2,8 +2,10 @@ using AutoMapper;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using SSP.Order.API.Consumers;
 using SSP.Order.API.Mapper;
@@ -28,6 +30,8 @@ namespace SSP.Order.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddHealthChecks();
 
             services.AddSingleton(sp => Configuration);
 
@@ -72,8 +76,20 @@ namespace SSP.Order.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
-            app.UseDeveloperExceptionPage();
+            //For api healthcheck
+            app.UseHealthChecks("api/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions()
+            {
+                ResponseWriter = async (context, report) =>
+                {
+                    await context.Response.WriteAsync("OK");
+                }
+            });
+
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SSP.Order.API v1"));
 
