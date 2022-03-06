@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -5,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SSP.Order.API.Extensions;
 using SSP.Order.API.Middlewares;
+using SSP.Order.API.Models.RequestModels;
+using SSP.Order.API.Validations;
 using SSP.Order.Application;
 using SSP.Order.Infrastructure;
 
@@ -22,7 +26,8 @@ namespace SSP.Order.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation(i => i.RunDefaultMvcValidationAfterFluentValidationExecutes = false);
 
             services.AddHealthChecks();
 
@@ -45,6 +50,9 @@ namespace SSP.Order.API
 
             //Configure Mapper
             services.ConfigureMapping();
+
+            //Add FluentValidation
+            services.AddTransient<IValidator<OrderCreateRequestModel>, OrderValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
