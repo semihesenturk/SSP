@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
 using SSP.Order.API.Extensions;
 using System;
 using System.IO;
@@ -33,17 +34,25 @@ namespace SSP.Order.API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureLogging(conf =>
+            .UseSerilog(configureLogger: (context, configuration) =>
+            {
+                configuration.Enrich.FromLogContext()
+                .Enrich.WithMachineName()
+                .WriteTo.Console()
+                .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(context.Configuration["ElasticConfiguration:Uri"]))
                 {
-                    conf.ClearProviders();
-                    conf.AddDebug();
-                    conf.AddConsole();
-
+                    IndexFormat = $"{context.Configuration["ApplicationName"]}-logs-{context.HostingEnvironment.EnvironmentName?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}",
+                    AutoRegisterTemplate = true,
+                    NumberOfShards = 2,
+                    NumberOfReplicas = 1
                 })
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseConfiguration(Configuration);
-                    webBuilder.UseStartup<Startup>();
-                });
+                .Enrich.WithProperty("Environment", context.HostingEnvironment.EnvironmentName)
+                .ReadFrom.Configuration(context.Configuration);
+            })
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                 webBuilder.UseConfiguration(Configuration);
+                 webBuilder.UseStartup<Startup>();
+            });
     }
 }
