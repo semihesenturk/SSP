@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Bogus;
+using SSP.Order.Shared.Enums;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,48 +18,27 @@ namespace SSP.Order.Infrastructure.Data
             await orderContext.SaveChangesAsync();
         }
 
-        private static IEnumerable<Domain.Entities.Order> PreconfiguredOrders => new List<Domain.Entities.Order>()
-            {
-                new Domain.Entities.Order()
-                {
-                    OrderNumber ="1",
-                    OrderCustomerId="1",
-                    OrderAddress ="Yeni mahalle küme sokak no:65 küçükçekmece istanbul",
-                    OrderAmount =100,
-                    Description ="Seed",
-                    OrderDate =System.DateTime.Now
-                    //OrderItems = new List<Domain.Entities.OrderItem>()
-                    //{
-                    //    new Domain.Entities.OrderItem()
-                    //      {
-                    //        OrderId=1,
-                    //        ProductCode ="P1",
-                    //        Description="Seed",
-                    //        ProductPrice=100,
-                    //        Quantity=1
-                    //    }
-                    //}
-                },
-                new Domain.Entities.Order()
-                {
-                    OrderNumber ="2",
-                    OrderCustomerId="2",
-                    OrderAddress ="Yeni mahalle küme sokak no:65 küçükçekmece istanbul",
-                    OrderAmount =150,
-                    Description ="Seed",
-                    OrderDate =System.DateTime.Now
-                    //OrderItems = new List<Domain.Entities.OrderItem>()
-                    //{
-                    //    new Domain.Entities.OrderItem()
-                    //      {
-                    //        OrderId=1,
-                    //        ProductCode ="P1",
-                    //        Description="Seed",
-                    //        ProductPrice=75,
-                    //        Quantity=2
-                    //    }
-                    //}
-                }
-            };
+        private static IEnumerable<Domain.Entities.Order> PreconfiguredOrders = GetFakeObjects();
+
+        private static IEnumerable<Domain.Entities.Order> GetFakeObjects()
+        {
+            //Creating fake orders with Bogus tool.
+            var orderFaker = new Faker<Domain.Entities.Order>("tr")
+                 .RuleFor(i => i.OrderNumber, i => i.Random.Int(1, 9999).ToString())
+                 .RuleFor(i => i.OrderAddress, i => i.Address.FullAddress())
+                 .RuleFor(i => i.OrderDate, i => i.Date.Recent())
+                 .RuleFor(i => i.OrderAmount, i => i.Finance.Amount())
+                 .RuleFor(i => i.OrderCustomerId, i => i.Random.Int().ToString())
+                 .RuleFor(i => i.Description, i => i.Commerce.ProductDescription())
+                 .RuleFor(i => i.Status, i => i.PickRandom<OrderStatusEnum>())
+
+                 .RuleFor(i => i.CreatedUserId, i => i.Random.Int())
+                 .RuleFor(i => i.IsActive, i => i.Random.Bool())
+                 .RuleFor(i => i.CreatedDate, i => i.Date.Recent());
+
+            return orderFaker.Generate(5);
+        }
+
+
     }
 }
